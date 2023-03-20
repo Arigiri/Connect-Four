@@ -1,6 +1,6 @@
 import pygame
 import time 
-
+import os
 class Point:
     def __init__(self, position : tuple, positionInTable : tuple, Player : int, color, size : int) -> None:
         self.position = position
@@ -39,6 +39,7 @@ class Game:
         self.Black = (0, 0, 0)
         self.Red = (255, 0, 0)
         self.Blue = (0, 0, 255)
+        self.Orange = (218, 160, 109)
         
     def Show(self):
         self.Surface.fill(self.White)
@@ -46,11 +47,12 @@ class Game:
             for j in range(self.row):
                 position = (j * self.size + self.O[0], i * self.size + self.O[1])
                 pygame.draw.rect(self.Surface, self.Black, pygame.Rect(position[0], position[1], self.size, self.size), 1)
-        
+                
+        os.system("cls")
         for point in self.points:
+            print(point.position)
             point.draw(self.Surface)
-       
-        
+            
         pygame.display.flip()
     
     def Input(self):
@@ -59,7 +61,7 @@ class Game:
             if event.type == pygame.QUIT:
                 self.running = False
             if event.type == pygame.MOUSEBUTTONDOWN:
-               if self.CurrPlayer == 1 and self.Drop(pygame.mouse.get_pos()):
+               if self.CurrPlayer == 1 and self.Drop(pygame.mouse.get_pos()) and self.CanCheckResult():
                     position = self.Drop(pygame.mouse.get_pos())
                     self.MakeDecision(position)
     
@@ -77,7 +79,6 @@ class Game:
     def Update(self):
         offset = 5
         #Update Input
-
         self.points = []
         for i in range(self.col):
             for j in range(self.row):
@@ -88,8 +89,6 @@ class Game:
                 if val == 1:
                     self.points.append(Point((j * self.size + self.O[0] + self.size // 2, i * self.size + self.O[1] + self.size // 2), 
                                            (j, i), self.mat[i][j], self.Red, self.size // 2 - offset))
-        if len(self.points) > 0:
-            pass
         #Update Points
         for point in self.points:
             if self.CanGoDown(point):
@@ -103,14 +102,6 @@ class Game:
         #applyPoint
         for point in self.points:
             self.mat[point.positionInTable[1]][point.positionInTable[0]] = point.Player
-
-        if len(self.points) > 0:
-            if self.CanCheckResult():
-                Player = self.CheckIfSomeOneWin()
-                if Player != 0:
-                    print(Player)
-                    self.ShowVictoryText(Player)
-                    pass
 
     def CheckIfSomeOneWin(self):
         Matdir = [(-1, -1), (1, 1), (-1, 1), (1, -1), (1, 0), (-1, 0), (0, 1), (0, -1)]
@@ -145,17 +136,17 @@ class Game:
     
     def ShowVictoryText(self, Player):
         self.GameEnded = True
-        self.Update()
         self.Show()
-        font = pygame.font.Font('freesansbold.ttf', 100)
-        
+        font = pygame.font.Font('freesansbold.ttf', 50)
+        offset = 100
         if Player == 1:
-            text = font.render('Player 1 Win', True, self.Red, self.White)
+            text = font.render('Player 1 Win', True, self.Orange)
         else:
-            text = font.render('Player 2 Win', True, self.Red, self.White)
+            text = font.render('Player 2 Win', True, self.Orange)
         text_rect = text.get_rect()
-        text_rect.center = self.width // 2, self.height // 2
+        text_rect.center = self.width - text_rect.size[0] + offset, text_rect.size[1]
         self.Surface.blit(text, text_rect)
+        pygame.display.flip()
     
     def CanGoDown(self, point):
         MaxHeight = len(self.mat) - 1
@@ -167,10 +158,22 @@ class Game:
     def Progress(self):
         self.Input()
         if not self.GameEnded:
+            Player = 0
+            if len(self.points) > 0:
+                if self.CanCheckResult():
+                    Player = self.CheckIfSomeOneWin()
             self.Update()
             self.Show()
+            if Player != 0:
+                self.Win(Player)
+            
         time.sleep(0.1)
-        
+    
+    def Win(self, Player):
+        print(Player)
+        self.ShowVictoryText(Player)
+        pass
+    
     def MakeDecision(self, position):
         self.mat[0][position[0]] = self.CurrPlayer
         if self.CurrPlayer == 1:

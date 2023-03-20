@@ -21,7 +21,7 @@ class AI:
 
     def Progress(self):
         self.game.Progress()
-        if self.game.CheckIfAICanMakeDecision():
+        if self.game.CheckIfAICanMakeDecision() and self.game.CanCheckResult() and self.game.CheckIfSomeOneWin() == 0:
             self.game.ExportMap()
             self.AIMakeDecision()
     
