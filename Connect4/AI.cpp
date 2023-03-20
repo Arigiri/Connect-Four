@@ -4,7 +4,7 @@ using namespace std;
 const int width = 7, height = 6;
 int mat[10][10]; // save game map
 
-void read()
+void read() // read data from map
 {
     freopen("map.txt", "r", stdin);
     for(int i = 0; i < height; i++)  
