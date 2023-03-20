@@ -14,7 +14,7 @@ void read() // read data from map
 void MakeDecision()
 {
     ///make any decision here
-    pair<int, int> result = {2, 2}; 
+    pair<int, int> result = {2, 1}; 
 
     freopen("decision.txt", "w", stdout);
     cout << result.first << ' ' << result.second; // in ra 2 số lần lượt là tọa độ x và tọa độ y của bảng

@@ -65,7 +65,7 @@ class Game:
     
     def Drop(self, position : tuple):
         posx = (position[0] - self.O[0]) // self.size
-        posy = (position[1] - self.O[1]) // self.size
+        posy = 0
         try:
             if(self.mat[posy][posx] != 0 or posx < 0 or posy < 0):
                 return False
@@ -172,7 +172,7 @@ class Game:
         time.sleep(0.1)
         
     def MakeDecision(self, position):
-        self.mat[position[1]][position[0]] = self.CurrPlayer
+        self.mat[0][position[0]] = self.CurrPlayer
         if self.CurrPlayer == 1:
             self.CurrPlayer = -1
         else: self.CurrPlayer = 1
