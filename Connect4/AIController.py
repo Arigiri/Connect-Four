@@ -4,14 +4,12 @@ import os
 class AI:
     def __init__(self) -> None:
         self.game = Game()
+        os.system("g++ AI.cpp")
         pass
-
-    def TriggerAI(self) -> None:
-        os.system("a.exe")
     
     def AIMakeDecision(self):
         os.system("a.exe")
-        f = open("decision.txt", "r")
+        f = open("decision.txt", "r")   
         decision = f.readline()
         posx = int(decision[0])
         posy = int(decision[-1])
