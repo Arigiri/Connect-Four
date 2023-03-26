@@ -1,7 +1,4 @@
-# Connect-Four
-Make an AI can play Connect Four
-# How it work
-Code MakeDecision functiono in AI.cpp to make an decision.
-The result must be a pair of integer. They are position of new button in the board.
-If you do not understand anything, contact me.
-Please build before testing.
+# My team made an AI to play Connect Four
+Visit in Mod 2023
+# How to play Connect Four?
+Vào mỗi lượt của từng người chơi, họ sẽ thả đĩa của mình vào bảng chơi. Sao cho đĩa rơi ở vị trí cuối cùng của bảng (hoặc là bên dưới có một đĩa khác). Người chiến thắng là người đầu tiên có được một đường thẳng hoặc chéo gồm 4 đĩa của mình trước.
